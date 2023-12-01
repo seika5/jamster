@@ -1,0 +1,17 @@
+{
+   "manifest_version": 3,
+   "name": "Jamster",
+   "permissions": [ "tabs" ],
+   "version": "0.0.1",
+   "background": {
+      "service_worker": "service_worker.js",
+      "type": "module"
+   },
+   "sandbox": {
+      "pages": [ "sandbox.html" ],
+      "type": "module"
+   },
+   "content_security_policy": {
+      "sandbox": "sandbox allow-scripts; script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com"
+   }
+}
