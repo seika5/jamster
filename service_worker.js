@@ -26,19 +26,25 @@ const config = {
 const app = firebase.initializeApp(config);
 const db = firebase.firestore();
 
+let url = "";
+let prev = "";
+
 const check = () => {
     getTab().then((a) => {
         if (a[0]) {
-            let url = a[0].url.substring(0, a[0].url.indexOf("&"));
+            url = a[0].url.substring(0, a[0].url.indexOf("&"));
+        } else {
+            url = "";
+        }
+
+        if (url != prev) {
             db.collection("room").doc("lh3a5CscevpOFLGg7j6l").set({
                 song: url,
             });
-        } else {
-            db.collection("room").doc("lh3a5CscevpOFLGg7j6l").set({
-                song: "",
-            });
+            prev = url;
         }
     });
 };
 
-chrome.tabs.onActivated.addListener(check);
+chrome.tabs.onUpdated.addListener(check);
+chrome.tabs.onRemoved.addListener(check);
