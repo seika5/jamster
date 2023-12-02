@@ -28,12 +28,17 @@ const db = firebase.firestore();
 
 const check = () => {
     getTab().then((a) => {
-        let url = a[0].url.substring(0, a[0].url.indexOf("&"));
-        db.collection("room").doc("lh3a5CscevpOFLGg7j6l").set({
-            name: "id",
-            state: url,
-        });
+        if (a[0]) {
+            let url = a[0].url.substring(0, a[0].url.indexOf("&"));
+            db.collection("room").doc("lh3a5CscevpOFLGg7j6l").set({
+                song: url,
+            });
+        } else {
+            db.collection("room").doc("lh3a5CscevpOFLGg7j6l").set({
+                song: "",
+            });
+        }
     });
 };
 
-setInterval(check, 1000);
+chrome.tabs.onActivated.addListener(check);
