@@ -28,6 +28,20 @@ const db = firebase.firestore();
 
 let url = "";
 let prev = "";
+let room = "";
+
+chrome.storage.local.get('jamster', function (result) {
+    if (result.jamster) {
+        room = result.jamster;
+    } else {
+        db.collection("room").add({
+            song: ""
+        }).then((docRef) => {
+            room = docRef.id;
+            chrome.storage.local.set({'jamster': docRef.id});
+        })
+    }
+});
 
 const check = () => {
     getTab().then((a) => {
@@ -37,9 +51,9 @@ const check = () => {
             url = "";
         }
 
-        if (url != prev) {
-            db.collection("room").doc("lh3a5CscevpOFLGg7j6l").set({
-                song: url,
+        if (url !== prev) {
+            db.collection("room").doc(room).set({
+                song: url
             });
             prev = url;
         }

@@ -1,12 +1,15 @@
 {
    "manifest_version": 3,
    "name": "Jamster",
-   "permissions": [ "tabs" ],
-   "version": "0.0.1",
+   "permissions": [ "storage", "tabs" ],
+   "version": "0.0.2",
    "background": {
       "service_worker": "service_worker.js",
       "type": "module"
    },
+  "action": {
+      "default_popup": "popup.html"
+  },
    "sandbox": {
       "pages": [ "sandbox.html" ],
       "type": "module"
